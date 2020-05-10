@@ -1,0 +1,7 @@
+name: wait
+transitions:
+  - target: time
+    event: c_released
+
+  - target: update
+    guard: after(2)

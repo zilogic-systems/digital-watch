@@ -1,0 +1,58 @@
+name: stopwatch
+initial: stopwatch_zero
+transitions:
+  - target: time
+    event: a_pressed
+states:
+  - name: stopwatch_zero
+    on entry: |
+      model.zero_stopwatch()
+      view.update_display_stopwatch_zero()
+      view.update_mode_selection("stopwatch")
+    transitions:
+      - target: stopwatch_nonzero
+        event: b_pressed
+        
+  - name: stopwatch_nonzero
+    parallel states:
+      - name: stopwatch_run
+        initial: stopwatch_on
+        states:
+          - name: stopwatch_on
+            on entry: model.start_stopwatch()
+            transitions:
+              - target: stopwatch_off
+                event: b_pressed
+
+          - name: stopwatch_off
+            on entry: model.stop_stopwatch()
+            transitions:
+              - target: stopwatch_on
+                event: b_pressed
+        
+      - name: stopwatch_display
+        on entry: |
+          view.update_display_stopwatch()
+          view.update_mode_selection("stopwatch")
+        initial: stopwatch_reg
+        states:
+          - name: stopwatch_reg
+            transitions:
+              - target: stopwatch_lap
+                event: d_pressed
+                guard: active("stopwatch_on")
+
+              - target: stopwatch_zero
+                event: d_pressed
+                guard: active("stopwatch_off")
+
+              - target: stopwatch_reg
+                guard: after(0.1)
+                action: |
+                  view.update_display_stopwatch()
+
+          - name: stopwatch_lap
+            on entry: print("lap")
+            transitions:
+              - target: stopwatch_reg
+                event: d_pressed

@@ -1,0 +1,19 @@
+name: time
+on entry: |
+  view.update_display_time()
+  view.update_indication_state()
+  view.update_disp_select(None)
+transitions:
+  - target: time
+    guard: after(1)
+    action: |
+      view.update_display_time()
+
+  - target: date
+    event: d_pressed
+
+  - target: alarm1
+    event: a_pressed
+
+  - target: wait
+    event: c_pressed

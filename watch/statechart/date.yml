@@ -1,0 +1,10 @@
+name: date
+on entry: |
+  view.update_display_date()
+  view.update_indication_state()
+transitions:
+  - target: time
+    event: d_pressed
+
+  - target: time
+    guard: after(10)

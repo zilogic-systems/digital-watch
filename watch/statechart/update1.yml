@@ -1,0 +1,28 @@
+name: update1
+transitions:
+  - target: alarm1
+    event: b_pressed
+    
+states:
+  - name: update1_hour
+    on entry: view.update_disp_select("hour")
+    transitions:
+      - target: update1_min
+        event: c_pressed
+
+      - event: d_pressed
+        action: |
+          model.increment_hour("alarm1")
+          view.update_display_alarm1()
+    
+  - name: update1_min
+    on entry: view.update_disp_select("min")
+    transitions:
+      - target: alarm1
+        event: c_pressed
+        action: view.update_disp_select(None)
+
+      - event: d_pressed
+        action: |
+          model.increment_min("alarm1")
+          view.update_display_alarm1()

@@ -1,0 +1,42 @@
+statechart:
+  name: Watch
+  root state:
+    name: watch
+    parallel states:
+
+    - name: clock
+      initial: tick
+      states:
+        - name: tick
+          transitions:
+            - target: tick
+              guard: after(1)
+              action: |
+                model.update_time()
+                send("tick-tock")
+
+    - name: chime-play
+      initial: wait-hour
+      states:
+        - name: wait-hour
+          transitions:
+            - target: wait-hour
+              event: tick-tock
+              guard: model.is_hour() and model.enabled["chime"]
+              action: player.play("chime")
+
+    - name: light
+      initial: off
+      states:
+        - name: on
+          on entry: view.set_light(True)
+          transitions:
+            - target: off
+              event: b_released
+        - name: off
+          on entry: view.set_light(False)
+          transitions:
+            - target: on
+              event: b_pressed
+
+    - !include main.yml

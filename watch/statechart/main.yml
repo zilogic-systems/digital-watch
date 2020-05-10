@@ -1,0 +1,50 @@
+name: main
+initial: displays
+states:
+    - name: alarms-beep
+      transitions:
+        - target: displays
+          event: any_pressed
+          action: player.stop()
+
+        - target: displays
+          guard: after(10)
+          action: player.stop()
+
+      states:
+        - name: alarm1_beeps
+          on entry: player.play("alarm1", loop=True)
+          
+        - name: alarm2_beeps
+          on entry: player.play("alarm2", loop=True)
+          
+        - name: both_beep
+          on entry: player.play("alarm1", loop=True)
+
+    - name: displays
+      initial: time
+      transitions:
+        - target: alarm1_beeps
+          event: tick-tock
+          guard: model.has_fired_alarm1()
+
+        - target: alarm2_beeps
+          event: tick-tock
+          guard: model.has_fired_alarm2()
+
+        - target: both_beep
+          event: tick-tock
+          guard: model.has_fired_alarm1() and model.has_fired_alarm2()
+          priority: 1
+
+      states:
+        - !include time.yml
+        - !include date.yml
+        - !include update1.yml
+        - !include alarm1.yml
+        - !include update2.yml
+        - !include alarm2.yml
+        - !include chime.yml
+        - !include stopwatch.yml              
+        - !include wait.yml
+        - !include update.yml

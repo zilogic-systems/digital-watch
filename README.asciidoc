@@ -1,13 +1,13 @@
-# Digital Watch
+= Digital Watch
 
 Demonstration of statecharts using a digital watch. The example is
 based on the digital watch described in Harel's paper.
 
 The statechart is implemented using Sismic, GTK+ and Python.
 
-![Screenshot](docs/screenshot.png)
+image::docs/screenshot.png[]
 
-## Dependencies
+== Dependencies
 
 Requires:
 
@@ -15,6 +15,16 @@ Requires:
   * GStreamer
   * Sismic
 
-## Usage
+== Usage
 
     python3 -m watch
+
+== Statechart
+
+image::docs/watch.png[]
+
+image::docs/displays.png[]
+
+image::docs/update.png[]
+
+image::docs/update1.png[]

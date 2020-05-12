@@ -5,7 +5,7 @@ based on the digital watch described in Harel's paper.
 
 The statechart is implemented using Sismic, GTK+ and Python.
 
-image::docs/screenshot.png[]
+image::docs/screenshot.png[align="center"]
 
 == Dependencies
 
@@ -21,10 +21,18 @@ Requires:
 
 == Statechart
 
-image::docs/watch.png[]
+=== Watch
 
-image::docs/displays.png[]
+image::docs/watch.png[align="center"]
 
-image::docs/update.png[]
+=== Displays
 
-image::docs/update1.png[]
+image::docs/displays.png[align="center"]
+
+=== Time Update
+
+image::docs/update.png[align="center"]
+
+=== Alarm Update
+
+image::docs/update1.png[align="center"]

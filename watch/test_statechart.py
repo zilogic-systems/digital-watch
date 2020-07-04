@@ -22,20 +22,18 @@ def load_interpreter():
 def setup_statechart():
     view = Mock()
     model = Model()
-    player = Mock()
 
     it = load_interpreter()
     it.context["view"] = view
     it.context["model"] = model
-    it.context["player"] = player
 
     steps = it.execute()
 
-    return it, view, model, player
+    return it, view, model
 
 
 def test_light_on():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
 
     it.queue("b_pressed").execute()
 
@@ -43,7 +41,7 @@ def test_light_on():
 
 
 def test_light_off():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
 
     it.queue("b_pressed").execute()
     it.queue("b_released").execute()
@@ -52,7 +50,7 @@ def test_light_off():
 
 
 def test_show_date():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
 
     it.queue("d_pressed").execute()
     it.queue("d_released").execute()
@@ -61,7 +59,7 @@ def test_show_date():
 
 
 def test_auto_hide_date():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
 
     it.queue("d_pressed").execute()
     it.queue("d_released").execute()
@@ -74,7 +72,7 @@ def test_auto_hide_date():
 
 
 def test_manual_toggle_date():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
     it.queue("d_pressed").execute()
     it.queue("d_released").execute()
 
@@ -85,7 +83,7 @@ def test_manual_toggle_date():
 
 
 def test_alarm1():
-    it, view, model, player = setup_statechart()
+    it, view, model = setup_statechart()
 
     steps = it.queue("a_pressed").execute()
     steps += it.queue("a_released").execute()

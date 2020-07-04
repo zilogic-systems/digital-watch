@@ -23,7 +23,7 @@ statechart:
             - target: wait-hour
               event: tick-tock
               guard: model.is_hour() and model.enabled["chime"]
-              action: player.play("chime")
+              action: view.play("chime")
 
     - name: light
       initial: off

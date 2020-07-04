@@ -5,21 +5,21 @@ states:
       transitions:
         - target: displays
           event: any_pressed
-          action: player.stop()
+          action: view.stop()
 
         - target: displays
           guard: after(10)
-          action: player.stop()
+          action: view.stop()
 
       states:
         - name: alarm1_beeps
-          on entry: player.play("alarm1", loop=True)
+          on entry: view.play("alarm1", loop=True)
 
         - name: alarm2_beeps
-          on entry: player.play("alarm2", loop=True)
+          on entry: view.play("alarm2", loop=True)
 
         - name: both_beep
-          on entry: player.play("alarm1", loop=True)
+          on entry: view.play("alarm1", loop=True)
 
     - name: displays
       initial: time

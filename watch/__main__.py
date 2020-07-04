@@ -154,7 +154,7 @@ class Player:
         self._player.set_state(Gst.State.NULL)
 
 
-class View:
+class GtkView:
     icons = {
         "alarm1": "🔔",
         "alarm2": "🔔",
@@ -162,11 +162,12 @@ class View:
         "stopwatch": "⏱",
     }
 
-    def __init__(self, model, mainloop, interpreter):
+    def __init__(self, model, interpreter):
         self._model = model
-        self._mainloop =  mainloop
         self._interpreter = interpreter
 
+        self._mainloop = GObject.MainLoop()
+        self._player = Player(self._mainloop)
         self._builder = Gtk.Builder()
         self._builder.add_from_file(get_resource_path("watch.glade"))
         self._builder.connect_signals(self)
@@ -301,6 +302,15 @@ class View:
         self._interpreter.execute()
         GObject.timeout_add(100, self._run_sm)
 
+    def play(self, name, loop=False):
+        self._player.play(name, loop)
+
+    def stop(self):
+        self._player.stop()
+
+    def run(self):
+        self._mainloop.run()
+
 
 if __name__ == "__main__":
     with open(get_resource_path('statechart/watch.yml')) as f:
@@ -312,13 +322,10 @@ if __name__ == "__main__":
 
     model = Model()
 
-    mainloop = GObject.MainLoop()
-    view = View(model, mainloop, interpreter)
-    player = Player(mainloop)
+    view = GtkView(model, interpreter)
 
     interpreter.context["model"] = model
     interpreter.context["view"] = view
-    interpreter.context["player"] = player
 
     interpreter.execute_once()
-    mainloop.run()
+    view.run()

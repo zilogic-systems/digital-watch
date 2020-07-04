@@ -7,8 +7,8 @@ from sismic.interpreter import Interpreter
 from sismic.testing import state_is_entered
 
 from .include import IncludeLoader
-from .__main__ import get_resource_path
-from .__main__ import Model
+from .utils import get_resource_path
+from .model import Model
 
 
 def load_interpreter():

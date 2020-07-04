@@ -161,12 +161,12 @@ class View:
         "chime": "🎵",
         "stopwatch": "⏱",
     }
-    
+
     def __init__(self, model, mainloop, interpreter):
         self._model = model
         self._mainloop =  mainloop
         self._interpreter = interpreter
-        
+
         self._builder = Gtk.Builder()
         self._builder.add_from_file(get_resource_path("watch.glade"))
         self._builder.connect_signals(self)
@@ -177,7 +177,7 @@ class View:
         self._light_image = self._builder.get_object("light_image")
 
         self._setup_buttons()
-        
+
         top_window = self._builder.get_object("top_window")
         top_window.show_all()
 
@@ -192,12 +192,12 @@ class View:
     def _display_time(self, time):
         self._min_label.set_text(time.strftime("%M"))
         self._sec_label.set_text(time.strftime("%S"))
-        
+
         if not self._model.hour24:
             self._am_pm_label.set_text(time.strftime("%p"))
             self._hour_label.set_text(time.strftime("%I"))
         else:
-            self._am_pm_label.set_text("")            
+            self._am_pm_label.set_text("")
             self._hour_label.set_text(time.strftime("%H"))
 
     def _display_on_off(self, state):
@@ -238,26 +238,26 @@ class View:
         self._sec_label.set_text("")
         self._am_pm_label.set_text("")
         self._display_on_off(self._model.enabled["chime"])
-            
+
     def update_display_stopwatch_zero(self):
         self._hour_label.set_text("{:02}".format(0))
         self._min_label.set_text("{:02}".format(0))
         self._sec_label.set_text("{:02}".format(0))
         self._am_pm_label.set_text("")
-        
+
     def update_display_stopwatch(self):
         elapsed = model.stopw_elapsed
         if not self._model.stopw_stopped:
             elapsed += (datetime.datetime.today() - self._model.stopw_time)
         stopwatch_time = elapsed.total_seconds()
-            
+
         total_mseconds = int(stopwatch_time * 1000)
         mseconds = total_mseconds % 1000
         total_seconds = total_mseconds // 1000
         seconds = total_seconds % 60
         total_minutes = total_seconds // 60
         minutes = total_minutes % 60
-            
+
         self._hour_label.set_text("{:02}".format(minutes))
         self._min_label.set_text("{:02}".format(seconds))
         self._sec_label.set_text("{:02}".format(mseconds // 10))
@@ -285,7 +285,7 @@ class View:
     def _setup_buttons(self):
         for name in "a", "b", "c", "d":
             button = self._builder.get_object(name + "_button")
-            
+
             def on_button_pressed(x, name=name):
                 self._interpreter.queue(name + "_pressed")
                 self._interpreter.queue("any_pressed")
@@ -293,7 +293,7 @@ class View:
             def on_button_released(x, name=name):
                 self._interpreter.queue(name + "_released")
                 self._interpreter.queue("any_released")
-            
+
             button.connect("pressed", on_button_pressed)
             button.connect("released", on_button_released)
 
@@ -309,7 +309,7 @@ if __name__ == "__main__":
 
     interpreter = Interpreter(statechart)
     interpreter.clock.start()
-    
+
     model = Model()
 
     mainloop = GObject.MainLoop()
@@ -320,5 +320,5 @@ if __name__ == "__main__":
     interpreter.context["view"] = view
     interpreter.context["player"] = player
 
-    interpreter.execute_once()        
+    interpreter.execute_once()
     mainloop.run()

@@ -12,7 +12,7 @@ states:
     transitions:
       - target: stopwatch_nonzero
         event: b_pressed
-        
+
   - name: stopwatch_nonzero
     parallel states:
       - name: stopwatch_run
@@ -29,7 +29,7 @@ states:
             transitions:
               - target: stopwatch_on
                 event: b_pressed
-        
+
       - name: stopwatch_display
         on entry: |
           view.update_display_stopwatch()

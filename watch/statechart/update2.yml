@@ -2,7 +2,7 @@ name: update2
 transitions:
   - target: alarm2
     event: b_pressed
-    
+
 states:
   - name: update2_hour
     on entry: view.update_disp_select("hour")
@@ -14,7 +14,7 @@ states:
         action: |
           model.increment_hour("alarm2")
           view.update_display_alarm2()
-    
+
   - name: update2_min
     on entry: view.update_disp_select("min")
     transitions:

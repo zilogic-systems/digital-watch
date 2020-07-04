@@ -14,10 +14,10 @@ states:
       states:
         - name: alarm1_beeps
           on entry: player.play("alarm1", loop=True)
-          
+
         - name: alarm2_beeps
           on entry: player.play("alarm2", loop=True)
-          
+
         - name: both_beep
           on entry: player.play("alarm1", loop=True)
 
@@ -45,6 +45,6 @@ states:
         - !include update2.yml
         - !include alarm2.yml
         - !include chime.yml
-        - !include stopwatch.yml              
+        - !include stopwatch.yml
         - !include wait.yml
         - !include update.yml

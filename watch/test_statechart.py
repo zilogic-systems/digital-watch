@@ -36,7 +36,7 @@ def setup_statechart():
 
 def test_light_on():
     it, view, model, player = setup_statechart()
-    
+
     it.queue("b_pressed").execute()
 
     view.set_light.assert_called_with(True)
@@ -77,7 +77,7 @@ def test_manual_toggle_date():
     it, view, model, player = setup_statechart()
     it.queue("d_pressed").execute()
     it.queue("d_released").execute()
-    
+
     steps = it.queue("d_pressed").execute()
     steps += it.queue("d_released").execute()
 
@@ -86,11 +86,8 @@ def test_manual_toggle_date():
 
 def test_alarm1():
     it, view, model, player = setup_statechart()
-    
+
     steps = it.queue("a_pressed").execute()
     steps += it.queue("a_released").execute()
 
     assert state_is_entered(steps, "alarm1")
-
-
-    

@@ -1,17 +1,28 @@
-# coding: utf-8
+import sys
 
 from .model import Model
 from .presenter import Presenter
-from .view_gtk import GtkView
+
+if len(sys.argv) != 2:
+    print("watch: UI not specified")
+    exit(1)
+
+if sys.argv[1] == "gtk":
+    from .view_gtk import GtkView as View
+
+elif sys.argv[1] == "kivy":
+    from .view_kivy import KivyView as View
+
+else:
+    print("watch: unsupported UI specified")
+    exit(1)
 
 
-if __name__ == "__main__":
-    model = Model()
-    presenter = Presenter()
-    view = GtkView(model, presenter.it)
+model = Model()
+presenter = Presenter()
+view = View(model, presenter.it)
 
-    presenter.it.context["model"] = model
-    presenter.it.context["view"] = view
+presenter.it.context["model"] = model
+presenter.it.context["view"] = view
 
-    presenter.it.execute_once()
-    view.run()
+view.run()

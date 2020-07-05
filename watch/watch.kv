@@ -1,0 +1,115 @@
+BoxLayout:
+    orientation: "horizontal"
+    FloatLayout:
+        size_hint: 0.75, 1
+        BoxLayout:
+            orientation: "vertical"
+            pos_hint: { "x": 0, "y": 0 }
+            GridLayout:
+                cols: 4
+                size_hint: 1, 0.25
+                Label:
+                    text: "ALARM1"
+                Label:
+                    text: "ALARM2"
+                Label:
+                    text: "CHIME"
+                Label:
+                    text: "STOP.W"
+                Label:
+                    id: alarm1_label
+                    text: "."
+                    font_size: "30dp"
+                    font_name: "fa"
+                Label:
+                    id: alarm2_label
+                    text: "."
+                    font_size: "30dp"
+                    font_name: "fa"
+                Label:
+                    id: chime_label
+                    text: "."
+                    font_size: "30dp"
+                    font_name: "fa"
+                Label:
+                    id: stopwatch_label
+                    text: "."
+                    font_size: "30dp"
+                    font_name: "fa"
+            BoxLayout:
+                size_hint: 1, 0.60
+                Label:
+                    id: hour_label
+                    text: "09"
+                    font_size: "80dp"
+                Label:
+                    text: ":"
+                    font_size: "80dp"
+                Label:
+                    id: min_label
+                    text: "24"
+                    font_size: "80dp"
+                BoxLayout:
+                    orientation: "vertical"
+                    Label:
+                        id: am_pm_label
+                        text: "AM"
+                        font_size: "30dp"
+                    Label:
+                        id: am_pm_sel_label
+                        text: "--"
+                        font_size: "30dp"
+                        size_hint: 1, 0.2
+                    Label:
+                        id: sec_label
+                        text: "37"
+                        font_size: "30dp"
+                    Label:
+                        id: sec_sel_label
+                        text: "--"
+                        font_size: "30dp"
+                        size_hint: 1, 0.2
+            BoxLayout:
+                size_hint: 1, 0.15
+                Label:
+                    id: hour_sel_label
+                    text: "--"
+                    font_size: "100dp"
+                Label:
+                    text: ""
+                    font_size: "100dp"
+                Label:
+                    id: min_sel_label
+                    text: "--"
+                    font_size: "100dp"
+                Label:
+                    text: ""
+                    font_size: "100dp"
+        Label:
+            id: light_label
+            pos_hint: { "x": 0, "y": 0 }
+            opacity: 0
+            canvas.before:
+                Color:
+                    rgba: 205 / 255, 255 / 255, 108 / 255, 255 / 255
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 0.25, 1
+        Button:
+            text: "MODE"
+            id: a_button
+        Button:
+            text: "LIGHT\nSTART/STOP"
+            halign: "center"
+            id: b_button
+        Button:
+            text: "SELECT"
+            id: c_button
+        Button:
+            text: "READ/SET\nLAP/RESET"
+            halign: "center"
+            id: d_button

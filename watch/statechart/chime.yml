@@ -1,7 +1,7 @@
 name: chime
 on entry: |
-  view.update_display_chime(model.enabled["chime"])
-  view.update_mode_selection("chime")
+  pr.update_display_chime(model.enabled["chime"])
+  pr.update_mode_selection("chime")
 initial: chime_on_off
 transitions:
   - target: stopwatch
@@ -22,7 +22,7 @@ states:
         event: d_pressed
         action: |
           model.enabled["chime"] = True
-          view.update_display_chime(model.enabled["chime"])
+          pr.update_display_chime(model.enabled["chime"])
 
   - name: chime_on
     transitions:
@@ -30,4 +30,4 @@ states:
         event: d_pressed
         action: |
           model.enabled["chime"] = False
-          view.update_display_chime(model.enabled["chime"])
+          pr.update_display_chime(model.enabled["chime"])

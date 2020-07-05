@@ -1,13 +1,13 @@
 name: time
 on entry: |
-  view.update_display_time(model.time["current"], model.hour24)
-  view.update_indication_state(model.enabled)
-  view.update_disp_select(None)
+  pr.update_display_time(model.time["current"], model.hour24)
+  pr.update_indication_state(model.enabled)
+  pr.update_disp_select(None)
 transitions:
   - target: time
     guard: after(1)
     action: |
-      view.update_display_time(model.time["current"], model.hour24)
+      pr.update_display_time(model.time["current"], model.hour24)
 
   - target: date
     event: d_pressed

@@ -23,18 +23,18 @@ statechart:
             - target: wait-hour
               event: tick-tock
               guard: model.is_hour() and model.enabled["chime"]
-              action: view.play("chime")
+              action: pr.play("chime")
 
     - name: light
       initial: off
       states:
         - name: on
-          on entry: view.set_light(True)
+          on entry: pr.set_light(True)
           transitions:
             - target: off
               event: b_released
         - name: off
-          on entry: view.set_light(False)
+          on entry: pr.set_light(False)
           transitions:
             - target: on
               event: b_pressed

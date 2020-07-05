@@ -5,7 +5,7 @@ transitions:
 
 states:
   - name: update2_hour
-    on entry: view.update_disp_select("hour")
+    on entry: pr.update_disp_select("hour")
     transitions:
       - target: update2_min
         event: c_pressed
@@ -13,20 +13,20 @@ states:
       - event: d_pressed
         action: |
           model.increment_hour("alarm2")
-          view.update_display_alarm(model.time["alarm2"],
-                                    model.hour24,
-                                    model.enabled["alarm2"])
+          pr.update_display_alarm(model.time["alarm2"],
+                                  model.hour24,
+                                  model.enabled["alarm2"])
 
   - name: update2_min
-    on entry: view.update_disp_select("min")
+    on entry: pr.update_disp_select("min")
     transitions:
       - target: alarm2
         event: c_pressed
-        action: view.update_disp_select(None)
+        action: pr.update_disp_select(None)
 
       - event: d_pressed
         action: |
           model.increment_min("alarm2")
-          view.update_display_alarm(model.time["alarm2"],
-                                    model.hour24,
-                                    model.enabled["alarm2"])
+          pr.update_display_alarm(model.time["alarm2"],
+                                  model.hour24,
+                                  model.enabled["alarm2"])

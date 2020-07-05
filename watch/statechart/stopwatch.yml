@@ -7,8 +7,8 @@ states:
   - name: stopwatch_zero
     on entry: |
       model.zero_stopwatch()
-      view.update_display_stopwatch_zero()
-      view.update_mode_selection("stopwatch")
+      pr.update_display_stopwatch_zero()
+      pr.update_mode_selection("stopwatch")
     transitions:
       - target: stopwatch_nonzero
         event: b_pressed
@@ -32,10 +32,10 @@ states:
 
       - name: stopwatch_display
         on entry: |
-          view.update_display_stopwatch(model.stopw_elapsed,
+          pr.update_display_stopwatch(model.stopw_elapsed,
                                         model.stopw_stopped,
                                         model.stopw_time)
-          view.update_mode_selection("stopwatch")
+          pr.update_mode_selection("stopwatch")
         initial: stopwatch_reg
         states:
           - name: stopwatch_reg
@@ -51,9 +51,9 @@ states:
               - target: stopwatch_reg
                 guard: after(0.1)
                 action: |
-                  view.update_display_stopwatch(model.stopw_elapsed,
-                                                model.stopw_stopped,
-                                                model.stopw_time)
+                  pr.update_display_stopwatch(model.stopw_elapsed,
+                                              model.stopw_stopped,
+                                              model.stopw_time)
 
           - name: stopwatch_lap
             on entry: print("lap")

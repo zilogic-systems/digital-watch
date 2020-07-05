@@ -8,10 +8,10 @@ if len(sys.argv) != 2:
     exit(1)
 
 if sys.argv[1] == "gtk":
-    from .view_gtk import GtkView as View
+    from .view_gtk import GtkUI as View
 
 elif sys.argv[1] == "kivy":
-    from .view_kivy import KivyView as View
+    from .view_kivy import KivyUI as View
 
 else:
     print("watch: unsupported UI specified")
@@ -19,10 +19,7 @@ else:
 
 
 model = Model()
-presenter = Presenter()
-view = View(presenter.it)
+view = View()
+pr = Presenter(view, model)
 
-presenter.it.context["model"] = model
-presenter.it.context["view"] = view
-
-view.run()
+pr.run()

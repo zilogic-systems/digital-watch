@@ -1,9 +1,9 @@
 name: alarm2
 on entry: |
-  view.update_display_alarm(model.time["alarm2"],
-                            model.hour24,
-                            model.enabled["alarm2"])
-  view.update_mode_selection("alarm2")
+  pr.update_display_alarm(model.time["alarm2"],
+                          model.hour24,
+                          model.enabled["alarm2"])
+  pr.update_mode_selection("alarm2")
 initial: alarm2_on_off
 transitions:
   - target: chime
@@ -27,9 +27,9 @@ states:
         event: d_pressed
         action: |
           model.enabled["alarm2"] = True
-          view.update_display_alarm(model.time["alarm2"],
-                                    model.hour24,
-                                    model.enabled["alarm2"])
+          pr.update_display_alarm(model.time["alarm2"],
+                                  model.hour24,
+                                  model.enabled["alarm2"])
 
   - name: alarm2_on
     transitions:
@@ -37,6 +37,6 @@ states:
         event: d_pressed
         action: |
           model.enabled["alarm2"] = False
-          view.update_display_alarm(model.time["alarm2"],
-                                    model.hour24,
-                                    model.enabled["alarm2"])
+          pr.update_display_alarm(model.time["alarm2"],
+                                  model.hour24,
+                                  model.enabled["alarm2"])

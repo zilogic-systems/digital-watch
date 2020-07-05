@@ -13,7 +13,9 @@ states:
       - event: d_pressed
         action: |
           model.increment_hour("alarm1")
-          view.update_display_alarm1()
+          view.update_display_alarm(model.time["alarm1"],
+                                    model.hour24,
+                                    model.enabled["alarm1"])
 
   - name: update1_min
     on entry: view.update_disp_select("min")
@@ -25,4 +27,6 @@ states:
       - event: d_pressed
         action: |
           model.increment_min("alarm1")
-          view.update_display_alarm1()
+          view.update_display_alarm(model.time["alarm1"],
+                                    model.hour24,
+                                    model.enabled["alarm1"])

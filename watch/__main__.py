@@ -20,7 +20,7 @@ else:
 
 model = Model()
 presenter = Presenter()
-view = View(model, presenter.it)
+view = View(presenter.it)
 
 presenter.it.context["model"] = model
 presenter.it.context["view"] = view

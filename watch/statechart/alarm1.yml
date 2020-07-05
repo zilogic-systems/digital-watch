@@ -1,6 +1,8 @@
 name: alarm1
 on entry: |
-  view.update_display_alarm1()
+  view.update_display_alarm(model.time["alarm1"],
+                            model.hour24,
+                            model.enabled["alarm1"])
   view.update_mode_selection("alarm1")
 initial: alarm1_on_off
 transitions:
@@ -25,12 +27,15 @@ states:
         event: d_pressed
         action: |
           model.enabled["alarm1"] = True
-          view.update_display_alarm1()
-
+          view.update_display_alarm(model.time["alarm1"],
+                                    model.hour24,
+                                    model.enabled[alarm1"])
   - name: alarm1_on
     transitions:
       - target: alarm1_off
         event: d_pressed
         action: |
           model.enabled["alarm1"] = False
-          view.update_display_alarm1()
+          view.update_display_alarm(model.time["alarm1"],
+                                    model.hour24,
+                                    model.enabled["alarm1"])

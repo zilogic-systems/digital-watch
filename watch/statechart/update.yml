@@ -1,6 +1,6 @@
 name: update
 on entry: |
-  view.update_display_time()
+  view.update_display_time(model.time["current"], model.hour24)
 initial: update_sec
 transitions:
   - target: time
@@ -14,7 +14,7 @@ states:
       - event: d_pressed
         action: |
           model.increment_sec("current")
-          view.update_display_time()
+          view.update_display_time(model.time["current"], model.hour24)
   - name: update_min
     on entry: view.update_disp_select("min")
     transitions:
@@ -23,7 +23,7 @@ states:
       - event: d_pressed
         action: |
           model.increment_min("current")
-          view.update_display_time()
+          view.update_display_time(model.time["current"], model.hour24)
   - name: update_hour
     on entry: view.update_disp_select("hour")
     transitions:
@@ -32,18 +32,18 @@ states:
       - event: d_pressed
         action: |
           model.increment_hour("current")
-          view.update_display_time()
+          view.update_display_time(model.time["current"], model.hour24)
   - name: update_mon
     on entry: |
       view.update_disp_select("hour")
-      view.update_display_date()
+      view.update_display_date(model.time["current"])
     transitions:
       - target: update_day
         event: c_pressed
       - event: d_pressed
         action: |
           model.increment_month("current")
-          view.update_display_date()
+          view.update_display_date(model.time["current"])
   - name: update_day
     on entry: view.update_disp_select("min")
     transitions:
@@ -52,7 +52,7 @@ states:
       - event: d_pressed
         action: |
           model.increment_day("current")
-          view.update_display_date()
+          view.update_display_date(model.time["current"])
   - name: update_year
     on entry: view.update_disp_select("sec")
     transitions:
@@ -61,15 +61,15 @@ states:
       - event: d_pressed
         action: |
           model.increment_year("current")
-          view.update_display_date()
+          view.update_display_date(model.time["current"])
   - name: update_mode
     on entry: |
       view.update_disp_select("am_pm")
-      view.update_display_time()
+      view.update_display_time(model.time["current"], model.hour24)
     transitions:
       - target: time
         event: c_pressed
       - event: d_pressed
         action: |
           model.toggle_mode()
-          view.update_display_time()
+          view.update_display_time(model.time["current"], model.hour24)

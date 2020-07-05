@@ -1,4 +1,4 @@
-import time
+import datetime
 
 import gi
 
@@ -43,8 +43,7 @@ class GtkView:
         "stopwatch": "⏱",
     }
 
-    def __init__(self, model, interpreter):
-        self._model = model
+    def __init__(self, interpreter):
         self._interpreter = interpreter
 
         self._mainloop = GObject.MainLoop()
@@ -71,11 +70,11 @@ class GtkView:
         else:
             self._light_image.hide()
 
-    def _display_time(self, time):
+    def _display_time(self, time, hour24):
         self._min_label.set_text(time.strftime("%M"))
         self._sec_label.set_text(time.strftime("%S"))
 
-        if not self._model.hour24:
+        if hour24:
             self._am_pm_label.set_text(time.strftime("%p"))
             self._hour_label.set_text(time.strftime("%I"))
         else:
@@ -96,30 +95,25 @@ class GtkView:
             else:
                 label.set_text("")
 
-    def update_display_time(self):
-        self._display_time(self._model.time["current"])
+    def update_display_time(self, time)
+        self._display_time(time)
 
-    def update_display_date(self):
-        time = self._model.time["current"]
+    def update_display_date(self, time):
         self._hour_label.set_text(time.strftime("%m"))
         self._min_label.set_text(time.strftime("%d"))
         self._sec_label.set_text(time.strftime("%y"))
         self._am_pm_label.set_text(time.strftime("%a"))
 
-    def update_display_alarm1(self):
-        self._display_time(self._model.time["alarm1"])
-        self._display_on_off(self._model.enabled["alarm1"])
+    def update_display_alarm(self, time, hour24, enabled):
+        self._display_time(time, hour24)
+        self._display_on_off(enabled)
 
-    def update_display_alarm2(self):
-        self._display_time(self._model.time["alarm2"])
-        self._display_on_off(self._model.enabled["alarm2"])
-
-    def update_display_chime(self):
+    def update_display_chime(self, enabled):
         self._hour_label.set_text("")
         self._min_label.set_text("00")
         self._sec_label.set_text("")
         self._am_pm_label.set_text("")
-        self._display_on_off(self._model.enabled["chime"])
+        self._display_on_off(enabled)
 
     def update_display_stopwatch_zero(self):
         self._hour_label.set_text("{:02}".format(0))
@@ -127,10 +121,9 @@ class GtkView:
         self._sec_label.set_text("{:02}".format(0))
         self._am_pm_label.set_text("")
 
-    def update_display_stopwatch(self):
-        elapsed = model.stopw_elapsed
-        if not self._model.stopw_stopped:
-            elapsed += (datetime.datetime.today() - self._model.stopw_time)
+    def update_display_stopwatch(self, elapsed, stopped, time):
+        if not stopped:
+            elapsed += (datetime.datetime.today() - time)
         stopwatch_time = elapsed.total_seconds()
 
         total_mseconds = int(stopwatch_time * 1000)
@@ -153,10 +146,10 @@ class GtkView:
             else:
                 label.set_text("")
 
-    def update_indication_state(self):
+    def update_indication_state(self, enabled):
         for ind in self.icons.keys():
             label = self._builder.get_object(ind + "_label")
-            if self._model.enabled[ind]:
+            if enabled[ind]:
                 label.set_text(self.icons[ind])
             else:
                 label.set_text("")

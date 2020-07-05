@@ -1,7 +1,7 @@
 name: date
 on entry: |
-  view.update_display_date()
-  view.update_indication_state()
+  view.update_display_date(model.time["current"])
+  view.update_indication_state(model.enabled)
 transitions:
   - target: time
     event: d_pressed

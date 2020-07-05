@@ -32,7 +32,9 @@ states:
 
       - name: stopwatch_display
         on entry: |
-          view.update_display_stopwatch()
+          view.update_display_stopwatch(model.stopw_elapsed,
+                                        model.stopw_stopped,
+                                        model.stopw_time)
           view.update_mode_selection("stopwatch")
         initial: stopwatch_reg
         states:
@@ -49,7 +51,9 @@ states:
               - target: stopwatch_reg
                 guard: after(0.1)
                 action: |
-                  view.update_display_stopwatch()
+                  view.update_display_stopwatch(model.stopw_elapsed,
+                                                model.stopw_stopped,
+                                                model.stopw_time)
 
           - name: stopwatch_lap
             on entry: print("lap")

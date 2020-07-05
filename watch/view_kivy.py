@@ -1,3 +1,5 @@
+import datetime
+
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
@@ -15,8 +17,7 @@ class KivyView:
         "stopwatch": "\uF2F2",
     }
 
-    def __init__(self, model, interpreter):
-        self._model = model
+    def __init__(self, interpreter):
         self._interpreter = interpreter
         self._app = WatchApp()
 
@@ -67,41 +68,33 @@ class KivyView:
             else:
                 label.text = ""
 
-    def _display_time(self, time):
+    def update_display_time(self, time, hour24):
         self._ui.min_label.text = time.strftime("%M")
         self._ui.sec_label.text = time.strftime("%S")
 
-        if not self._model.hour24:
+        if hour24:
             self._ui.am_pm_label.text = time.strftime("%p")
             self._ui.hour_label.text = time.strftime("%I")
         else:
             self._ui.am_pm_label.text = ""
             self._ui.hour_label.text = time.strftime("%H")
 
-    def update_display_time(self):
-        self._display_time(self._model.time["current"])
-
-    def update_display_date(self):
-        time = self._model.time["current"]
+    def update_display_date(self, time):
         self._ui.hour_label.text = time.strftime("%m")
         self._ui.min_label.text = time.strftime("%d")
         self._ui.sec_label.text = time.strftime("%y")
         self._ui.am_pm_label.text = time.strftime("%a")
 
-    def update_display_alarm1(self):
-        self._display_time(self._model.time["alarm1"])
-        self._display_on_off(self._model.enabled["alarm1"])
+    def update_display_alarm(self, time, hour24, enabled):
+        self.update_display_time(time, hour24)
+        self._display_on_off(enabled)
 
-    def update_display_alarm2(self):
-        self._display_time(self._model.time["alarm2"])
-        self._display_on_off(self._model.enabled["alarm2"])
-
-    def update_display_chime(self):
+    def update_display_chime(self, enabled):
         self._ui.hour_label.text = ""
         self._ui.min_label.text = "00"
         self._ui.sec_label.text = ""
         self._ui.am_pm_label.text = ""
-        self._display_on_off(self._model.enabled["chime"])
+        self._display_on_off(enabled)
 
     def update_display_stopwatch_zero(self):
         self._ui.hour_label.text = "{:02}".format(0)
@@ -109,10 +102,9 @@ class KivyView:
         self._ui.sec_label.text = "{:02}".format(0)
         self._ui.am_pm_label.text = ""
 
-    def update_display_stopwatch(self):
-        elapsed = model.stopw_elapsed
-        if not self._model.stopw_stopped:
-            elapsed += (datetime.datetime.today() - self._model.stopw_time)
+    def update_display_stopwatch(self, elapsed, stopped, time):
+        if not stopped:
+            elapsed += (datetime.datetime.today() - time)
         stopwatch_time = elapsed.total_seconds()
 
         total_mseconds = int(stopwatch_time * 1000)
@@ -135,10 +127,10 @@ class KivyView:
             else:
                 label.text = ""
 
-    def update_indication_state(self):
+    def update_indication_state(self, enabled):
         for ind in self.icons.keys():
             label = self._ui[ind + "_label"]
-            if self._model.enabled[ind]:
+            if enabled[ind]:
                 label.text = self.icons[ind]
             else:
                 label.text = ""

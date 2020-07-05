@@ -1,6 +1,7 @@
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
+from kivy.core.window import Window
 
 
 class WatchApp(App):
@@ -31,6 +32,7 @@ class KivyUI:
         self._send_event = func
 
     def _setup_ui(self, *args):
+        Window.set_title("Digital Watch")
         self._widgets = self._app.root.ids
         self._setup_buttons()
 

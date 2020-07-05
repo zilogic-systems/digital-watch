@@ -10,7 +10,11 @@ The application uses an MVP design pattern, with the Presenter
 implement using statecharts and action functions. The View implemented
 using both Kivy and GTK+, selectable at run-time.
 
+.GTK+ UI
 image::docs/screenshot.png[align="center"]
+
+.Kivy UI
+image::docs/screenshot-kivy.png[align="center"]
 
 == Dependencies
 

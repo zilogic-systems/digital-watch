@@ -2,8 +2,9 @@
 
 Demonstration of embedded application development using statecharts,
 with a digital watch as example. The example is based on the digital
-watch described in Harel's paper.
+watch described in Harel's paper, the Citizen Multi Alarm III
 
+.Citizen Mutli Alarm III
 image::https://stored-edge.slickpic.com/NDQ1NjhlNzc3Mzc0Mw,,/20150827/MTEwMzY1NTczZTcz/p/1400/MG_9854.jpg[width="25%", align="center"]
 
 The application uses an MVP design pattern, with the Presenter

@@ -1,9 +1,14 @@
 = Digital Watch
 
-Demonstration of statecharts using a digital watch. The example is
-based on the digital watch described in Harel's paper.
+Demonstration of embedded application development using statecharts,
+with a digital watch as example. The example is based on the digital
+watch described in Harel's paper.
 
-The statechart is implemented using Sismic, GTK+ and Python.
+image::https://stored-edge.slickpic.com/NDQ1NjhlNzc3Mzc0Mw,,/20150827/MTEwMzY1NTczZTcz/p/1400/MG_9854.jpg[width="25%", align="center"]
+
+The application uses an MVP design pattern, with the Presenter
+implement using statecharts and action functions. The View implemented
+using both Kivy and GTK+, selectable at run-time.
 
 image::docs/screenshot.png[align="center"]
 
@@ -11,13 +16,13 @@ image::docs/screenshot.png[align="center"]
 
 Requires:
 
-  * GTK+
+  * GTK+ / Kivy
   * GStreamer
   * Sismic
 
 == Usage
 
-    python3 -m watch
+    python3 -m watch [gtk|kivy]
 
 == Statechart
 

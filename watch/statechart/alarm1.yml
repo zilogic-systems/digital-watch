@@ -29,7 +29,7 @@ states:
           model.enabled["alarm1"] = True
           pr.update_display_alarm(model.time["alarm1"],
                                   model.hour24,
-                                  model.enabled[alarm1"])
+                                  model.enabled["alarm1"])
   - name: alarm1_on
     transitions:
       - target: alarm1_off
